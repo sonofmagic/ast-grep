@@ -6,12 +6,12 @@ import * as babel from '@babel/core'
 import oxc from '@oxidation-compiler/napi'
 import * as swc from '@swc/core'
 import * as ts from 'typescript'
-import Parser from 'tree-sitter'
+// import Parser from 'tree-sitter'
 // because tree-sitter-typescript does not have d.ts
-const tresSitterTS = require('tree-sitter-typescript').typescript
+// const tresSitterTS = require('tree-sitter-typescript').typescript
 
-const treeSitter = new Parser()
-treeSitter.setLanguage(tresSitterTS)
+// const treeSitter = new Parser()
+// treeSitter.setLanguage(tresSitterTS)
 
 function prepareCases() {
   const tsEntry = fs.readFileSync('./fixtures/tsc.ts.fixture', 'utf8')
@@ -39,9 +39,9 @@ export function parseSyncBench(source: string) {
     'ast-grep sync parse': () => {
       sg.parse(source)
     },
-    'tree-sitter sync parse': () => {
-      treeSitter.parse(source)
-    },
+    // 'tree-sitter sync parse': () => {
+    //   treeSitter.parse(source)
+    // },
     'babel sync parse': () => {
       babel.parseSync(source, {
         plugins: ['@babel/plugin-syntax-typescript'],
@@ -72,9 +72,9 @@ export function parseSyncBench(source: string) {
 function parseAsyncBench(source: string) {
   const tasks = {
     'ast-grep async parse': () => sg.parseAsync(source),
-    'tree-sitter parse(not async)': async () => {
-      treeSitter.parse(source)
-    },
+    // 'tree-sitter parse(not async)': async () => {
+    //   treeSitter.parse(source)
+    // },
     'babel async parse': () =>
       babel.parseAsync(source, {
         plugins: ['@babel/plugin-syntax-typescript'],
